@@ -4,21 +4,16 @@ import './App.css'
 import {
   notes,
   keys,
-  getOctave,
-  getDegrees,
-  getTonicNotes,
-  getDominantNotes,
-  getSubdominantNotes,
   getRomanNumeral
 } from './App.utility'
 
 import KeyAndBaseSelector from './components/KeyAndBaseSelector/KeyAndBaseSelector'
+import NotesTable from './components/NotesTable/NotesTable'
 
 const App = () => {
   const [base, onUpdateBase] = useState(notes[0])
   const [key, onUpdateKey] = useState(keys[0].id)
 
-  const octave = getOctave(base)
 
   return (
     <>
@@ -28,65 +23,10 @@ const App = () => {
         onUpdateBase={onUpdateBase}
         onUpdateKey={onUpdateKey}
       />
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <td />
-              {octave.map(note => (
-                <th key={note}>{note}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>Degree</th>
-              {getDegrees({
-                octave,
-                key
-              }).map((degree, degreeIndex) => (
-                <td key={degreeIndex}>{degree}</td>
-              ))}
-            </tr>
-            <tr>
-              <th>Tonic</th>
-              {getTonicNotes({
-                octave,
-                key
-              }).map((isIncluded, degreeIndex) => (
-                <td
-                  key={degreeIndex}
-                  className={isIncluded ? 'highlighted' : ''}
-                />
-              ))}
-            </tr>
-            <tr>
-              <th>Dominant</th>
-              {getDominantNotes({
-                octave,
-                key
-              }).map((isIncluded, degreeIndex) => (
-                <td
-                  key={degreeIndex}
-                  className={isIncluded ? 'highlighted' : ''}
-                />
-              ))}
-            </tr>
-            <tr>
-              <th>Subdominant</th>
-              {getSubdominantNotes({
-                octave,
-                key
-              }).map((isIncluded, degreeIndex) => (
-                <td
-                  key={degreeIndex}
-                  className={isIncluded ? 'highlighted' : ''}
-                />
-              ))}
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <NotesTable
+        selectedBase={base}
+        selectedKey={key}
+      />
       <div>
         <table>
           <tbody>
