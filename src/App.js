@@ -1,85 +1,22 @@
-import React, {useState} from 'react';
-import './App.css';
+import React, {useState} from 'react'
+import './App.css'
 
-const notes = [
-  'C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'
-];
-
-
-const getRomanNumeral = number => (
-  ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'][number - 1]
-)
-
-const twoOctaves = [...notes, ...notes];
-
-const keys = [
-  {
-    id: 'major',
-    name: 'Major',
-    notes: [0, 2, 4, 5, 7, 9, 11]
-  },
-  {
-    id: 'naturalMinor',
-    name: 'Natural Minor',
-    notes: [0, 2, 3, 5, 7, 8, 10]
-  },
-]
-
-const getDegrees = ({octave, key}) => {
-  let degreeCounter = 1;
-  return octave.map((_, noteIndex) => {
-    if (keys.find(keyIterator => keyIterator.id === key).notes.includes(noteIndex)) {
-      return getRomanNumeral(degreeCounter++)
-    }
-    return null
-  })
-}
-
-const tonicDegrees = [1, 3, 6];
-const getTonicDegrees = ({octave, key}) => {
-  let degreeCounter = 1;
-  return octave.map((_, noteIndex) => {
-    if (keys.find(keyIterator => keyIterator.id === key).notes.includes(noteIndex)) {
-      if (tonicDegrees.includes(degreeCounter++)) {
-        return true
-      }
-    }
-    return false
-  })
-}
-
-const dominantDegrees = [3, 5, 7];
-const getDominantDegrees = ({octave, key}) => {
-  let degreeCounter = 1;
-  return octave.map((_, noteIndex) => {
-    if (keys.find(keyIterator => keyIterator.id === key).notes.includes(noteIndex)) {
-      if (dominantDegrees.includes(degreeCounter++)) {
-        return true
-      }
-    }
-    return false
-  })
-}
-
-const subdominantDegrees = [2, 4, 6];
-const getSubdominantDegrees = ({octave, key}) => {
-  let degreeCounter = 1;
-  return octave.map((_, noteIndex) => {
-    if (keys.find(keyIterator => keyIterator.id === key).notes.includes(noteIndex)) {
-      if (subdominantDegrees.includes(degreeCounter++)) {
-        return true
-      }
-    }
-    return false
-  })
-}
+import {
+  notes,
+  keys,
+  getOctave,
+  getDegrees,
+  getTonicNotes,
+  getDominantNotes,
+  getSubdominantNotes,
+  getRomanNumeral
+} from './App.utility'
 
 const App = () => {
-  const [base, onUpdateBase] = useState(notes[0]);
-  const [key, onUpdateKey] = useState(keys[0].id);
+  const [base, onUpdateBase] = useState(notes[0])
+  const [key, onUpdateKey] = useState(keys[0].id)
 
-  const scaleStart = twoOctaves.findIndex(note => note === base);
-  const scaleOctave = twoOctaves.slice(scaleStart, scaleStart + 12);
+  const octave = getOctave(base)
 
   return (
     <>
@@ -120,7 +57,7 @@ const App = () => {
           <thead>
             <tr>
               <td />
-              {scaleOctave.map(note => (
+              {octave.map(note => (
                 <th key={note}>{note}</th>
               ))}
             </tr>
@@ -129,7 +66,7 @@ const App = () => {
             <tr>
               <th>Degree</th>
               {getDegrees({
-                octave: scaleOctave,
+                octave,
                 key
               }).map((degree, degreeIndex) => (
                 <td key={degreeIndex}>{degree}</td>
@@ -137,8 +74,8 @@ const App = () => {
             </tr>
             <tr>
               <th>Tonic</th>
-              {getTonicDegrees({
-                octave: scaleOctave,
+              {getTonicNotes({
+                octave,
                 key
               }).map((isIncluded, degreeIndex) => (
                 <td
@@ -149,8 +86,8 @@ const App = () => {
             </tr>
             <tr>
               <th>Dominant</th>
-              {getDominantDegrees({
-                octave: scaleOctave,
+              {getDominantNotes({
+                octave,
                 key
               }).map((isIncluded, degreeIndex) => (
                 <td
@@ -161,8 +98,8 @@ const App = () => {
             </tr>
             <tr>
               <th>Subdominant</th>
-              {getSubdominantDegrees({
-                octave: scaleOctave,
+              {getSubdominantNotes({
+                octave,
                 key
               }).map((isIncluded, degreeIndex) => (
                 <td
@@ -243,7 +180,7 @@ const App = () => {
         </table>
       </div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
