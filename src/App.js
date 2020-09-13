@@ -174,19 +174,20 @@ const App = () => {
           </tbody>
         </table>
       </div>
-      {/* <div>
+      <div>
         <table>
           <tbody>
             <tr>
               <td rowSpan="3">
                 <select className="big">
-                  <option>I</option>
-                  <option>II</option>
-                  <option>III</option>
-                  <option>IV</option>
-                  <option>V</option>
-                  <option>VI</option>
-                  <option>VII</option>
+                  {[1, 2, 3, 4, 5, 6, 7].map(number => (
+                    <option
+                      key={number}
+                      value={number}
+                    >
+                      {getRomanNumeral(number)}
+                    </option>
+                  ))}
                 </select>
               </td>
               <td>
@@ -240,7 +241,7 @@ const App = () => {
             </tr>
           </tbody>
         </table>
-      </div> */}
+      </div>
     </>
   );
 }

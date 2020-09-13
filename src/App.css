@@ -1,9 +1,7 @@
-input[type="number"] {
-  width: 40px;
-}
-
 input, select {
   padding: 6px;
+  font-family: inherit;
+  font-size: inherit;
 }
 
 td, th {
@@ -21,11 +19,13 @@ td.highlighted {
   background-color: lightgreen;
 }
 
-/*
 select.big {
   height: 100%;
   min-width: 120px;
   font-size: 3rem;
   text-align: center;
 }
-*/
+
+input[type="number"] {
+  width: 80px;
+}
