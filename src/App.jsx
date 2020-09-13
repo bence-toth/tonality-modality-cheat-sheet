@@ -12,6 +12,8 @@ import {
   getRomanNumeral
 } from './App.utility'
 
+import KeyAndBaseSelector from './components/KeyAndBaseSelector/KeyAndBaseSelector'
+
 const App = () => {
   const [base, onUpdateBase] = useState(notes[0])
   const [key, onUpdateKey] = useState(keys[0].id)
@@ -20,38 +22,12 @@ const App = () => {
 
   return (
     <>
-      <div>
-        <select
-          value={base}
-          onChange={event => {
-            onUpdateBase(event.target.value)
-          }}
-        >
-          {notes.map(noteIterator => (
-            <option
-              key={noteIterator}
-              value={noteIterator}
-            >
-              {noteIterator}
-            </option>
-          ))}
-        </select>
-        <select
-          value={key.id}
-          onChange={event => {
-            onUpdateKey(event.target.value)
-          }}
-        >
-          {keys.map(keyIterator => (
-            <option
-              key={keyIterator.id}
-              value={keyIterator.id}
-            >
-              {keyIterator.name}
-            </option>
-          ))}
-        </select>
-      </div>
+      <KeyAndBaseSelector
+        selectedBase={base}
+        selectedKey={key}
+        onUpdateBase={onUpdateBase}
+        onUpdateKey={onUpdateKey}
+      />
       <div>
         <table>
           <thead>
